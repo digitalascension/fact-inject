@@ -26,7 +26,7 @@ class FactInject:
 
     def win(self):
         parser = argparse.ArgumentParser(
-            description='Builds krnl environment')
+            description='Facter for Windows')
         # NOT prefixing the argument with -- means it's not optional
         parser.add_argument('--host', help='Kernel version that will be pulled')
         parser.add_argument('--file', help='Kernel version that will be pulled')
@@ -36,7 +36,7 @@ class FactInject:
 
     def nix(self):
         parser = argparse.ArgumentParser(
-            description='Pulls a kernel'
+            description='Facter for Linux'
         )
         parser.add_argument('--host', help='Kernel version that will be pulled')
         parser.add_argument('--file', help='Kernel version pulled')
