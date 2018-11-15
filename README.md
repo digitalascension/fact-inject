@@ -1,6 +1,6 @@
-![Fact Humor](https://image.slidesharecdn.com/creativemorningsrobots-150519200757-lva1-app6891/95/slide-2-1024.jpg "Fact Inject!!!")
 # Fact Inject
 A tool to inject facter facts remotely.
+![Fact Humor](https://image.slidesharecdn.com/creativemorningsrobots-150519200757-lva1-app6891/95/slide-2-1024.jpg "Fact Inject!!!")
 
 ### Usage
 Inject uses JSON key-value pairs to add Facter environment variables to the target hosts.
