@@ -24,5 +24,16 @@ def create_win_facter_vars(facts):
 
 # Add Facter facts to windows as environment variables.
 def inject_win_facts(facts, host, username, password):
-    cmd = ''
+    cmd = 'Write-Output Hello'
+    vars = create_win_facter_vars(facts)
+    # Create the winrm session.
     rm = create_winrm_session(host, username, password)
+    # Now run try to run the powershell on the remote host.
+    result = rm.run_ps(cmd)
+    if result.status_code != 0:
+        print('Error: Could not add facts to Windows host {}.'.format(host))
+        print(result.std_err)
+        exit(code=1)
+    else:
+        print(result.std_out)
+
