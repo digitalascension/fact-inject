@@ -30,7 +30,17 @@ class FactInject:
         # NOT prefixing the argument with -- means it's not optional
         parser.add_argument('--host', help='Kernel version that will be pulled')
         parser.add_argument('--file', help='Kernel version that will be pulled')
+        # Parse the args and inject the facts.
         args = parser.parse_args(sys.argv[2:])
+        obj = parse.parse_input(args.file)
+        facts = parse.convert_to_fact(obj)
+        vars = windows.create_win_facter_vars(facts)
+        print(vars)
+        # hosts = shlex.split(args.host)
+        #for host in hosts:
+        #    print(host)
+        #    nix.inject_facts(facts, host=host, username='vagrant', password='Heidim2015')
+        #print(facts)
 
     def nix(self):
         parser = argparse.ArgumentParser(
