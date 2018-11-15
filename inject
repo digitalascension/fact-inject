@@ -1,5 +1,5 @@
 #!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
-import argparse, sys
+import argparse, sys, shlex
 
 from fact_inject import windows, nix, parse
 
@@ -32,20 +32,20 @@ class FactInject:
         parser.add_argument('--file', help='Kernel version that will be pulled')
         args = parser.parse_args(sys.argv[2:])
 
-        print(args)
-
     def nix(self):
         parser = argparse.ArgumentParser(
             description='Facter for Linux'
         )
         parser.add_argument('--host', help='Kernel version that will be pulled')
         parser.add_argument('--file', help='Kernel version pulled')
+        # Parse the args and inject the facts.
         args = parser.parse_args(sys.argv[2:])
-
-        print(args)
         obj = parse.parse_input(args.file)
         facts = parse.convert_to_fact(obj)
-        nix.inject_facts(facts, host=args.host, username='vagrant', password='')
+        hosts = shlex.split(args.host)
+        for host in hosts:
+            print(host)
+            nix.inject_facts(facts, host=host, username='vagrant', password='Heidim2015')
         print(facts)
 
 if __name__ == '__main__':
