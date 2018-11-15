@@ -1,7 +1,7 @@
 #!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 import argparse, sys
 
-from fact_inject import windows, nix
+from fact_inject import windows, nix, parse
 
 
 class FactInject:
@@ -28,8 +28,8 @@ class FactInject:
         parser = argparse.ArgumentParser(
             description='Builds krnl environment')
         # NOT prefixing the argument with -- means it's not optional
-        parser.add_argument('-t', help='Kernel version that will be pulled')
-        parser.add_argument('-t', help='Kernel version that will be pulled')
+        parser.add_argument('--host', help='Kernel version that will be pulled')
+        parser.add_argument('--file', help='Kernel version that will be pulled')
         args = parser.parse_args(sys.argv[2:])
 
         print(args)
@@ -38,22 +38,15 @@ class FactInject:
         parser = argparse.ArgumentParser(
             description='Pulls a kernel'
         )
-        parser.add_argument('-t', help='Kernel version that will be pulled')
-        parser.add_argument('-t', help='Kernel version that will be pulled')
+        parser.add_argument('--host', help='Kernel version that will be pulled')
+        parser.add_argument('--file', help='Kernel version pulled')
         args = parser.parse_args(sys.argv[2:])
 
         print(args)
-
-def command_message():
-    print('Usage: krnl COMMAND\n')
-    print('A distributed kernel management system\n')
-    print('Options:')
-    print('build    Builds krnl environment')
-    print('pull    Pulls a kernel')
-    print('list    Lists all pulled kernels\n')
-    print("Run 'krnl COMMAND -h' for more information on a command.")
-    exit(code=1)
-
+        obj = parse.parse_input(args.file)
+        facts = parse.convert_to_fact(obj)
+        nix.inject_facts(facts, host=args.host, username='vagrant', password='')
+        print(facts)
 
 if __name__ == '__main__':
     FactInject()
