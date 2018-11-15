@@ -6,7 +6,11 @@ def inject_facts(facts, host, username, password):
     # Create an ssh connection with paramiko.
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname=host, username=username, password=password)
+    try:
+        ssh.connect(hostname=host, username=username, password=password)
+    except paramiko.SSHException:
+        print('Error: Could not connect to {}.'.format(host))
+        exit(code=1)
 
     for item in facts.keys():
         cmd += 'echo export {0}={1} >> ~/.profile;'.format(item, facts[item])
