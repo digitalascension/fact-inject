@@ -23,7 +23,7 @@ def create_win_facter_vars(facts):
     return vars
 
 # Generate the powershell script that will add all of the environment variables to the node.
-def generate_ps_script(vars)
+def generate_ps_script(vars):
     script = ''
     for item in vars:
         script += '{};'.format(item)
@@ -43,4 +43,3 @@ def inject_win_facts(facts, host, username, password):
         exit(code=1)
     else:
         print(result.std_out)
-
