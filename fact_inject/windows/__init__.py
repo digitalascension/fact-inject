@@ -14,7 +14,7 @@ def create_winrm_session(host, username, password):
         print('Error: Could not connect to {}.'.format(host))
         exit(code=1)
 
-# Generate all of the environment variables that will be used to create the powershell
+# Create all of the environment variables that will be used to create the powershell
 # script that wil inject windows environment variables.
 def create_win_facter_vars(facts):
     vars = []
@@ -22,14 +22,21 @@ def create_win_facter_vars(facts):
         vars.append('$env:{0}="{1}"'.format(item, facts[item]))
     return vars
 
+# Generate the powershell script that will add all of the environment variables to the node.
+def generate_ps_script(vars)
+    script = ''
+    for item in vars:
+        script += '{};'.format(item)
+    return script
+
 # Add Facter facts to windows as environment variables.
 def inject_win_facts(facts, host, username, password):
-    cmd = 'Write-Output Hello'
     vars = create_win_facter_vars(facts)
+    script = generate_ps_script(vars)
     # Create the winrm session.
     rm = create_winrm_session(host, username, password)
     # Now run try to run the powershell on the remote host.
-    result = rm.run_ps(cmd)
+    result = rm.run_ps(script)
     if result.status_code != 0:
         print('Error: Could not add facts to Windows host {}.'.format(host))
         print(result.std_err)
