@@ -27,7 +27,7 @@ def inject_facts(facts, host, username, password):
         exit(code=1)
 
     for item in facts.keys():
-        cmd += 'echo export {0}={1} >> ~/.profile;'.format(item, facts[item])
+        cmd += 'echo export {0}={1} >> ~/.bash_profile;source ~/.bash_profile;'.format(item, facts[item])
     print(cmd)
     # Now append the facts to the /home/<user>/.profile.
     stdin, stdout, stderr = ssh.exec_command(command=cmd, timeout=15)
