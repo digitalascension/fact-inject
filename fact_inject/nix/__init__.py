@@ -1,5 +1,6 @@
 import paramiko
 
+
 # Create the winrm session that will be used to add facts to a windows host.
 # This is a helper function.
 def create_ssh_session(host, username, password):
@@ -7,13 +8,27 @@ def create_ssh_session(host, username, password):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     return ssh
 
+
 # Generate all of the environment variables that will be used to create the bash
 # script that wil inject linux environment variables.
 def create_nix_facter_vars(facts):
     vars = []
     for item in facts.keys():
-        vars.append('{0}={1}'.format(item, facts[item]))
+        if item is not None or facts[item] is not None:
+            vars.append('{0}={1}'.format(item, facts[item]))
+        else:
+            print('Error: Could not add a fact because a key or value was missing.')
     return vars
+
+
+# Check the host to see if the facts have already been added. This prevents
+# inject from writing to a user's shell profile multiple times.
+def check_facts(facts):
+    # The Python script that will be run on the remote host.
+    script ='import os'
+    for fact in facts:
+        script += 'fact = os.environ.get()'
+        script += 'if fact !'
 
 # Add the generated facts to the remote linux hosts.
 def inject_facts(facts, host, username, password):
