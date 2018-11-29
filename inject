@@ -26,7 +26,7 @@ class FactInject:
 
     def win(self):
         parser = argparse.ArgumentParser(
-            description='Facter for Windows')
+            description='Add Facter facts to a Windows host.')
         # NOT prefixing the argument with -- means it's not optional
         parser.add_argument('--host', help='The Windows host that facts will be added to')
         parser.add_argument('--file', help='JSON file containing facts to be added to the host')
@@ -44,7 +44,7 @@ class FactInject:
 
     def nix(self):
         parser = argparse.ArgumentParser(
-            description='Facter for Linux'
+            description='Add Facter facts to a Linux host.'
         )
         parser.add_argument('--host', help='The Linux host that facts will be added to')
         parser.add_argument('--file', help='JSON file containing facts to be added to the host')
