@@ -28,8 +28,8 @@ class FactInject:
         parser = argparse.ArgumentParser(
             description='Facter for Windows')
         # NOT prefixing the argument with -- means it's not optional
-        parser.add_argument('--host', help='Kernel version that will be pulled')
-        parser.add_argument('--file', help='Kernel version that will be pulled')
+        parser.add_argument('--host', help='The Windows host that facts will be added to')
+        parser.add_argument('--file', help='JSON file containing facts to be added to the host')
         # Parse the args and inject the facts.
         args = parser.parse_args(sys.argv[2:])
         obj = parse.parse_input(args.file)
@@ -46,8 +46,8 @@ class FactInject:
         parser = argparse.ArgumentParser(
             description='Facter for Linux'
         )
-        parser.add_argument('--host', help='Kernel version that will be pulled')
-        parser.add_argument('--file', help='Kernel version pulled')
+        parser.add_argument('--host', help='The Linux host that facts will be added to')
+        parser.add_argument('--file', help='JSON file containing facts to be added to the host')
         # Parse the args and inject the facts.
         args = parser.parse_args(sys.argv[2:])
         obj = parse.parse_input(args.file)
